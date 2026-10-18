@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brasil Open Personalizados</title>
+<meta name="description" content="Presentes personalizados com arte autoral: canecas, azulejos, ecobags e garrafas. Veja o catálogo, os valores e faça sua reserva pelo WhatsApp. Santa Cruz do Sul, RS.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --creme:#f8ebd0;
+    --creme-claro:#fdf6e7;
+    --rosa:#ff94d4;
+    --rosa-escuro:#d9559f;
+    --marrom:#6b4a45;
+    --marrom-escuro:#4a302c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Montserrat",system-ui,Arial,sans-serif;background:var(--creme);color:var(--marrom-escuro);line-height:1.55}
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif}
+  .container{max-width:980px;margin:0 auto;padding:0 16px}
+
+  /* Topo */
+  header{text-align:center;padding:36px 16px 44px;background:var(--creme)}
+  .logo-wrap{width:min(300px,78vw);margin:0 auto 6px}
+  .logo-wrap img{width:100%;height:auto;display:block;border-radius:18px}
+  .logo-fallback{display:none;font-family:"Playfair Display",serif;font-size:2.6rem;color:var(--marrom)}
+  .logo-fallback small{display:block;font-family:"Montserrat",sans-serif;font-size:.8rem;letter-spacing:4px;font-weight:700}
+  header p.slogan{margin-top:6px;font-size:1.05rem;color:var(--marrom)}
+
+  /* Botões */
+  .botoes{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:999px;font-family:inherit;font-weight:700;font-size:.98rem;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(74,48,44,.22)}
+  .btn-whats{background:#1fa855;color:#fff}
+  .btn-opcoes{background:var(--rosa);color:var(--marrom-escuro)}
+  .btn-catalogo{background:var(--creme-claro);color:var(--marrom);border-color:var(--marrom)}
+  .btn-reservar{background:var(--marrom);color:#fff}
+  .btn-insta{background:var(--marrom-escuro);color:#fff}
+
+  section{padding:46px 0}
+  section h2{text-align:center;font-size:1.9rem;color:var(--marrom);margin-bottom:6px}
+  .sub{text-align:center;margin-bottom:28px;color:#7b5f5a}
+
+  /* Produtos */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+  .card{background:var(--creme-claro);border-radius:22px;overflow:hidden;box-shadow:0 3px 12px rgba(107,74,69,.12);display:flex;flex-direction:column;border-bottom:6px solid var(--rosa)}
+  .card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--creme)}
+  .card .corpo{padding:18px 20px 22px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .card h3{font-size:1.2rem;color:var(--marrom)}
+  .card p{color:#7b5f5a;font-size:.92rem}
+  .card .det{font-size:.85rem;font-weight:600;color:var(--marrom)}
+  .card .espaco{flex:1}
+  .preco{font-size:1.5rem;font-weight:700;color:var(--rosa-escuro)}
+  .card .btn{padding:10px 16px;font-size:.92rem;background:#1fa855;color:#fff;margin-top:6px}
+  .nota{max-width:640px;margin:26px auto 0;text-align:center;font-weight:600;color:var(--marrom)}
+
+  /* Catálogo */
+  #catalogo{background:var(--rosa);text-align:center}
+  #catalogo h2{color:var(--marrom-escuro)}
+  #catalogo .sub{color:var(--marrom-escuro)}
+  #catalogo .btn{background:var(--marrom);color:#fff;font-size:1.05rem;padding:16px 30px}
+
+  /* Informações */
+  .info{max-width:720px;margin:0 auto;background:var(--creme-claro);border-radius:28px;padding:28px 30px;box-shadow:0 3px 12px rgba(107,74,69,.12)}
+  .info ul{padding-left:20px;display:grid;gap:10px;font-weight:600;color:var(--marrom-escuro)}
+  .info li::marker{color:var(--rosa-escuro)}
+  .info .fecho{text-align:center;margin-top:18px;font-family:"Playfair Display",serif;font-weight:700;font-size:1.1rem;color:var(--marrom)}
+
+  /* Galeria */
+  .galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .foto{position:relative;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:var(--creme-claro);box-shadow:0 3px 10px rgba(107,74,69,.15);cursor:pointer}
+  .foto img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+  .foto:hover img{transform:scale(1.05)}
+  .foto figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;font-size:.85rem;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(74,48,44,.82))}
+  .foto.vazia{display:flex;align-items:center;justify-content:center;text-align:center;border:2px dashed var(--rosa-escuro);color:var(--rosa-escuro);font-weight:600;padding:16px;cursor:default;box-shadow:none}
+
+  .modal{position:fixed;inset:0;background:rgba(40,25,22,.88);display:none;align-items:center;justify-content:center;z-index:50;padding:18px}
+  .modal.aberto{display:flex}
+  .modal img{max-width:100%;max-height:88vh;border-radius:12px}
+  .modal button{position:absolute;top:14px;right:18px;background:none;border:none;color:#fff;font-size:2.2rem;cursor:pointer}
+
+  /* Reserva */
+  #reservar{background:var(--creme-claro)}
+  form{max-width:560px;margin:0 auto;display:grid;gap:14px}
+  label{font-weight:600;font-size:.92rem;display:block;margin-bottom:4px;color:var(--marrom)}
+  input,select,textarea{width:100%;padding:12px;border:1.5px solid #dcc7b8;border-radius:12px;font:inherit;background:#fff;color:var(--marrom-escuro)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--rosa-escuro);box-shadow:0 0 0 3px rgba(255,148,212,.35)}
+  textarea{min-height:90px;resize:vertical}
+  .linha{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.linha{grid-template-columns:1fr}}
+  form .btn{width:100%;background:#1fa855;color:#fff}
+  .aviso{text-align:center;font-size:.83rem;color:#7b5f5a}
+
+  footer{background:var(--marrom);color:#fff;text-align:center;padding:24px 16px 90px;font-size:.88rem}
+
+  .flutuante{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:#1fa855;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:10}
+
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--marrom-escuro);color:#fff;padding:12px 20px;border-radius:14px;font-size:.9rem;font-weight:600;max-width:90vw;text-align:center;opacity:0;pointer-events:none;transition:.3s;z-index:60}
+  .toast.mostra{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Logo Brasil Open Personalizados"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="logo-fallback">Brasil<small>OPEN · PERSONALIZADOS</small></div>
+    </div>
+    <p class="slogan">Presentes personalizados com arte autoral, feitos com carinho em cada detalhe.</p>
+    <div class="botoes">
+      <a class="btn btn-whats" id="btnWhats" target="_blank" rel="noopener">💬 Chamar no WhatsApp</a>
+      <a class="btn btn-opcoes" href="#opcoes">🛍️ Opções e valores</a>
+      <a class="btn btn-catalogo" id="btnCatalogoTopo" target="_blank" rel="noopener">📖 Ver catálogo</a>
+      <a class="btn btn-reservar" href="#reservar">📅 Fazer reserva</a>
+      <a class="btn btn-insta" id="btnInsta" target="_blank" rel="noopener">📸 Instagram</a>
+    </div>
+  </div>
+</header>
+
+<section id="opcoes">
+  <div class="container">
+    <h2>Opções de venda</h2>
+    <p class="sub">Escolha seu produto e peça pelo WhatsApp.</p>
+    <div class="grid" id="listaProdutos"></div>
+    <p class="nota">✨ Os valores já incluem a personalização.</p>
+  </div>
+</section>
+
+<section id="catalogo">
+  <div class="container">
+    <h2>Catálogo completo</h2>
+    <p class="sub">Veja todos os nossos produtos, modelos e tamanhos.</p>
+    <a class="btn" id="btnCatalogo" target="_blank" rel="noopener">📖 Abrir catálogo</a>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="container">
+    <h2>Nossos trabalhos</h2>
+    <p class="sub">Fotos reais dos produtos que já entregamos.</p>
+    <div class="galeria" id="galeria"></div>
+  </div>
+</section>
+
+<section id="informacoes">
+  <div class="container">
+    <h2>Informações importantes</h2>
+    <p class="sub">Tudo o que você precisa saber antes de pedir.</p>
+    <div class="info">
+      <ul>
+        <li>Personalização inclusa no valor.</li>
+        <li>Produção de 3 a 5 dias úteis (consultar disponibilidade).</li>
+        <li>Retirada em Santa Cruz do Sul, RS ou entrega via motoboy (taxa calculada conforme o endereço).</li>
+        <li>Aceitamos Pix e link de pagamento.</li>
+        <li>Pedidos acima de 10 unidades possuem condições especiais (consulte).</li>
+        <li>Pedidos em grande quantidade para eventos devem ser solicitados com no mínimo 10 dias de antecedência.</li>
+        <li>Serviço full, com entrega em 24 horas: valor adicional de R$ 10,00 por item.</li>
+      </ul>
+      <p class="fecho">Vamos criar um presente inesquecível?</p>
+    </div>
+  </div>
+</section>
+
+<section id="reservar">
+  <div class="container">
+    <h2>Reserve o seu pedido</h2>
+    <p class="sub">Preencha os dados: a mensagem é copiada e o WhatsApp abre para você colar e enviar.</p>
+    <form id="formReserva">
+      <div>
+        <label for="nome">Seu nome</label>
+        <input id="nome" required placeholder="Ex.: Maria Silva">
+      </div>
+      <div>
+        <label for="produto">Produto</label>
+        <select id="produto" required></select>
+      </div>
+      <div class="linha">
+        <div>
+          <label for="qtd">Quantidade</label>
+          <input id="qtd" type="number" min="1" value="1" required>
+        </div>
+        <div>
+          <label for="data">Data desejada</label>
+          <input id="data" type="date" required>
+        </div>
+      </div>
+      <div>
+        <label for="obs">Detalhes da personalização</label>
+        <textarea id="obs" placeholder="Nome, cores, tema, frase, tamanho..."></textarea>
+      </div>
+      <button class="btn" type="submit">✅ Reservar pelo WhatsApp</button>
+      <p class="aviso">A reserva é confirmada após a nossa resposta no WhatsApp.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="botoes" style="margin:0 0 14px">
+    <a class="btn btn-whats" id="btnWhats2" target="_blank" rel="noopener">💬 WhatsApp</a>
+    <a class="btn btn-insta" id="btnInsta2" target="_blank" rel="noopener">📸 @brasil_open</a>
+  </div>
+  Retirada em Santa Cruz do Sul, RS<br>
+  © <span id="ano"></span> Brasil Open Personalizados — Todos os direitos reservados.
+</footer>
+
+<a class="flutuante" id="btnFlutuante" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<div class="modal" id="modal"><button id="fechar" aria-label="Fechar">×</button><img id="modalImg" alt=""></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   ✏️ EDITE AQUI: links, produtos e fotos
+   ============================================================ */
+const CONFIG = {
+  whatsapp:  "https://wa.me/qr/OSTZO6RBAJF6G1",
+  instagram: "https://www.instagram.com/brasil_open?psln=dHhweGdqaWxoY2x3",
+  catalogo:  "catalogo.pdf"
+};
+
+const PRODUTOS = [
+  { nome: "Caneca branca",            foto: "fotos/caneca-branca.jpg",
+    descricao: "Caneca branca cerâmica importada com arte colorida.", detalhe: "325 ml", preco: "R$ 39,90" },
+  { nome: "Caneca com alça colorida", foto: "fotos/caneca-alca-colorida.jpg",
+    descricao: "Caneca com alça e interior colorido. Consulte as cores disponíveis.", detalhe: "325 ml", preco: "R$ 49,90" },
+  { nome: "Caneca pequena",           foto: "fotos/caneca-pequena.jpg",
+    descricao: "Caneca pequena branca cerâmica com arte colorida. Com pires: consulte o valor.", detalhe: "Sem pires", preco: "R$ 29,90" },
+  { nome: "Caneca + colher dourada",  foto: "fotos/caneca-colher-dourada.jpg",
+    descricao: "Caneca branca cerâmica + colher dourada.", detalhe: "325 ml", preco: "R$ 45,99" },
+  { nome: "Caneca mágica",            foto: "fotos/caneca-magica.jpg",
+    descricao: "Em contato com a bebida quente, revela a arte.", detalhe: "325 ml", preco: "R$ 49,99" },
+  { nome: "Garrafa infantil",         foto: "fotos/garrafa-infantil.jpg",
+    descricao: "Garrafa de alumínio personalizada.", detalhe: "500 ml", preco: "R$ 65,00" },
+  { nome: "Azulejo cerâmica",         foto: "fotos/azulejo.jpg",
+    descricao: "Azulejo resinado + suporte, com qualquer arte colorida.", detalhe: "Tamanho 15x15", preco: "R$ 39,90" },
+  { nome: "Mini azulejo cerâmica",    foto: "fotos/mini-azulejo-2.jpg",
+    descricao: "Mini azulejo resinado com ímã, com qualquer arte colorida.", detalhe: "Cada unidade", preco: "R$ 11,99" },
+  { nome: "Ecobag poliéster",         foto: "fotos/ecobag.jpg",
+    descricao: "Com qualquer arte colorida.", detalhe: "Tamanho 40 x 40", preco: "R$ 34,90" }
+];
+
+// Fotos da galeria "Nossos trabalhos". Para adicionar mais, envie a imagem
+// para a pasta "fotos" do repositório e copie uma linha abaixo.
+const FOTOS = [
+  { arquivo: "fotos/caneca-branca.jpg",         legenda: "Caneca branca" },
+  { arquivo: "fotos/caneca-alca-colorida.jpg",  legenda: "Caneca com alça colorida" },
+  { arquivo: "fotos/caneca-pequena.jpg",        legenda: "Caneca pequena" },
+  { arquivo: "fotos/caneca-colher-dourada.jpg", legenda: "Caneca + colher dourada" },
+  { arquivo: "fotos/caneca-magica.jpg",         legenda: "Caneca mágica" },
+  { arquivo: "fotos/garrafa-infantil.jpg",      legenda: "Garrafas infantis" },
+  { arquivo: "fotos/azulejo.jpg",               legenda: "Azulejo com suporte" },
+  { arquivo: "fotos/mini-azulejo-1.jpg",        legenda: "Mini azulejo com ímã" },
+  { arquivo: "fotos/mini-azulejo-2.jpg",        legenda: "Mini azulejo com ímã" },
+  { arquivo: "fotos/ecobag.jpg",                legenda: "Ecobag" }
+];
+/* ============================================================ */
+
+const $ = (id) => document.getElementById(id);
+
+// Botões de link direto
+["btnWhats","btnWhats2","btnFlutuante"].forEach(id => $(id).href = CONFIG.whatsapp);
+["btnInsta","btnInsta2"].forEach(id => $(id).href = CONFIG.instagram);
+["btnCatalogoTopo","btnCatalogo"].forEach(id => $(id).href = CONFIG.catalogo);
+
+// Aviso na tela
+let toastTimer;
+function aviso(texto) {
+  const t = $("toast");
+  t.textContent = texto;
+  t.classList.add("mostra");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("mostra"), 5000);
+}
+
+// O link do WhatsApp (QR) não aceita texto pronto:
+// copiamos a mensagem e abrimos a conversa para o cliente colar.
+function copiar(texto) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(texto).then(() => true, () => false);
+    }
+  } catch (e) {}
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = texto; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return Promise.resolve(ok);
+  } catch (e) { return Promise.resolve(false); }
+}
+
+function enviarWhats(msg) {
+  const janela = window.open(CONFIG.whatsapp, "_blank");
+  if (!janela) window.location.href = CONFIG.whatsapp;
+  copiar(msg).then(ok => aviso(ok
+    ? "Mensagem copiada! Cole na conversa do WhatsApp e envie."
+    : "Abra o WhatsApp e informe o produto desejado."));
+}
+
+// Produtos + opções do formulário
+const lista = $("listaProdutos");
+const select = $("produto");
+PRODUTOS.forEach(p => {
+  const card = document.createElement("article");
+  card.className = "card";
+  card.innerHTML =
+    `<img loading="lazy" alt="">
+     <div class="corpo">
+       <h3></h3><p></p><div class="det"></div><div class="espaco"></div>
+       <div class="preco"></div>
+       <button class="btn" type="button">Pedir no WhatsApp</button>
+     </div>`;
+  const img = card.querySelector("img");
+  img.src = p.foto; img.alt = p.nome;
+  card.querySelector("h3").textContent = p.nome;
+  card.querySelector("p").textContent = p.descricao;
+  card.querySelector(".det").textContent = p.detalhe;
+  card.querySelector(".preco").textContent = p.preco;
+  card.querySelector("button").addEventListener("click", () =>
+    enviarWhats(`Olá! Vim pelo site e tenho interesse em: ${p.nome} (${p.preco}). Pode me passar mais informações?`));
+  lista.appendChild(card);
+
+  const opt = document.createElement("option");
+  opt.value = p.nome;
+  opt.textContent = `${p.nome} — ${p.preco}`;
+  select.appendChild(opt);
+});
+const outro = document.createElement("option");
+outro.value = "Outro item / ideia própria";
+outro.textContent = "Outro item / ideia própria (consultar)";
+select.appendChild(outro);
+
+// Galeria de fotos
+const galeria = $("galeria");
+const modal = $("modal");
+const modalImg = $("modalImg");
+
+if (FOTOS.length === 0) {
+  for (let i = 0; i < 6; i++) {
+    const v = document.createElement("div");
+    v.className = "foto vazia";
+    v.textContent = "📷 Sua foto aqui";
+    galeria.appendChild(v);
+  }
+} else {
+  FOTOS.forEach(f => {
+    const fig = document.createElement("figure");
+    fig.className = "foto";
+    const img = document.createElement("img");
+    img.src = f.arquivo;
+    img.alt = f.legenda || "Produto Brasil Open Personalizados";
+    img.loading = "lazy";
+    fig.appendChild(img);
+    if (f.legenda) {
+      const cap = document.createElement("figcaption");
+      cap.textContent = f.legenda;
+      fig.appendChild(cap);
+    }
+    fig.addEventListener("click", () => { modalImg.src = f.arquivo; modal.classList.add("aberto"); });
+    galeria.appendChild(fig);
+  });
+}
+modal.addEventListener("click", () => modal.classList.remove("aberto"));
+
+// Data mínima = hoje
+const hoje = new Date();
+$("data").min = new Date(hoje.getTime() - hoje.getTimezoneOffset()*60000).toISOString().split("T")[0];
+$("ano").textContent = hoje.getFullYear();
+
+// Reserva -> WhatsApp
+$("formReserva").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const nome = $("nome").value.trim();
+  const dataBR = $("data").value.split("-").reverse().join("/");
+  const obs = $("obs").value.trim();
+
+  const msg =
+`*NOVA RESERVA - Brasil Open Personalizados*
+Nome: ${nome}
+Produto: ${select.value}
+Quantidade: ${$("qtd").value}
+Data desejada: ${dataBR}
+Personalização: ${obs || "Não informado"}`;
+
+  enviarWhats(msg);
+});
+</script>
+</body>
+</html>
